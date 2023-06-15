@@ -1755,12 +1755,12 @@ public:
         heliostatfield.ms_params.mv_clearsky_data = clearsky_data;
 
         //Load the solar field adjustment factors
-        sf_adjustment_factors sf_haf(this);
+        adjustment_factors sf_haf(this, "sf_adjust");
         if (!sf_haf.setup((int)n_steps_full))
             throw exec_error("tcsmolten_salt", "failed to setup sf adjustment factors: " + sf_haf.error());
         //allocate array to pass to tcs
-        heliostatfield.ms_params.m_sf_adjust.resize(sf_haf.size());
-        for (int i = 0; i < sf_haf.size(); i++)
+        heliostatfield.ms_params.m_sf_adjust.resize(n_steps_full);
+        for (int i = 0; i < n_steps_full; i++)
             heliostatfield.ms_params.m_sf_adjust.at(i) = sf_haf(i);
 
         // Set callback information
